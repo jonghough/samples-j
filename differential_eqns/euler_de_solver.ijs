@@ -38,7 +38,7 @@ NB. solution independently.
 else.
   r1=. coeffs solve_n_euler 0
   r2=. coeffs solve_n_euler 1
-smoutput coeffs
+  smoutput coeffs
 end.
 dr1=. (r1 d. (0{deriv)) (0{val)
 dr2=. (r2 d. (0{deriv)) (0{val)
@@ -54,7 +54,7 @@ else.
   ((0{constants)&*@:(coeffs solve_n_euler 0)) + ((1{constants)&*@:(coeffs solve_n_euler 1))
 end.
 )
- 
+
 
 solve_euler_ode=: conjunction define
 m boundary_conditions_euler n
