@@ -38,14 +38,12 @@ NB. solution independently.
 else.
   r1=. coeffs solve_n_euler 0
   r2=. coeffs solve_n_euler 1
-  smoutput coeffs
 end.
 dr1=. (r1 d. (0{deriv)) (0{val)
 dr2=. (r2 d. (0{deriv)) (0{val)
 dr3=. (r1 d. (1{deriv)) (1{val)
 dr4=. (r2 d. (1{deriv)) (1{val)
 mat=. (2 2) $ dr1, dr2, dr3, dr4
-smoutput mat
 mat=. %. mat
 constants=. mat (+/ . *) res
 if. =/ (roots coeffs) do.
