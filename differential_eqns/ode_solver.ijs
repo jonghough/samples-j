@@ -75,7 +75,7 @@ elseif. (# coeffs) = 2 do. NB. order 1 eqn (e.g. y'+y = 0)
 end.
 )
 
-
+NB. solve the ordinary differential eqn
 solve_ode=: conjunction define
 m boundary_conditions n
 )
