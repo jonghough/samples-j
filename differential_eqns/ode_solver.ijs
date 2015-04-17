@@ -40,8 +40,8 @@ val=. >1{ x NB. values to put in
 res=. >2{ x NB. the values' results, i.e. y^(deriv)(val) = res
 if. (# coeffs) = 3 do. NB. Quadratic ODE (e.g. y''+y'+y = 0)
   if. =/ (roots y) do.
-    c1=. 1 :'^@:((0{ (ROOTS m))&*)'
-    c2=. 1 :']*(^@:((0{ (ROOTS m))&*))'
+    c1=. 1 :'^@:((0{ (roots m))&*)'
+    c2=. 1 :']*(^@:((0{ (roots m))&*))'
     r1=. y c1
     r2=. y c2
 NB. non-repeating roots. Get the two summands of the
