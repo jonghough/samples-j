@@ -20,6 +20,9 @@ end.
 
 solve_n_euler=: 2 : '(n{ (roots m)) solve'
 
+NB. Solves euloer eqn differnetial equation for positive 
+NB. real arguments of boundary conditions.
+NB. i.e. y(x) for x > 0
 boundary_conditions_euler=: conjunction define
 
 coeffs=. euler y NB. polynomial coefficients
@@ -27,7 +30,10 @@ deriv=. >0{ x NB. the orders of derivatives
 val=. >1{ x NB. values to put in
 res=. >2{ x NB. the values' results, i.e. y^(deriv)(val) = res
 NB.if. (# coeffs) = 3 do. NB. Quadratic ODE (e.g. y''+y'+y = 0)
-
+if. 0 (e.>) val do.
+smoutput 'Cannot have non-positive arguments in boundary conditions.'
+0
+else.
 if. =/ (roots coeffs) do.
   c1=. 1 :'^&(0{ (roots m))'
   c2=. 1 :'^.*(^&(0{ (roots m)))'
@@ -50,6 +56,7 @@ if. =/ (roots coeffs) do.
   ((0{constants)&*@:(coeffs c1)) + ((1{constants)&*@:(coeffs c2))
 else.
   ((0{constants)&*@:(coeffs solve_n_euler 0)) + ((1{constants)&*@:(coeffs solve_n_euler 1))
+end.
 end.
 )
 
