@@ -4,18 +4,15 @@ NB. equations, of orders 1 and 2.
 NB. Get roots of polynomial
 roots=: >@:(1&{)@p.
 
-G=: 1 : '^@:(m&*)'
 
 solve=: 1 : ' (roots m) get_exponential'
-
 solve_n=: 2 : '(n{ (roots m)) get_exponential'
-
-
 
 
 NB. Gets the solution
 get_exponential=: 1 : 0
 sols=: m
+smoutput sols
 if. (# sols ) = 2 do.
   if. =/ sols do.
     ((>:)*(^@:(_1x&*)))
@@ -31,11 +28,6 @@ solve_duplicate=: 2 : 0
 rt0=. 0{ (roots n)
 ((0{m)&*@:(^@:(rt0&*)))+ ((1{m)&*@:(]*(^@:(rt0&*))))
 )
-
-
-
-
-
 
 
 NB. Boundary Conditions. Returns the coefficients
@@ -62,10 +54,9 @@ NB. solutions - for quadratics, differentiate the
 NB. summands and input the values.
 NB. This gets four numbers, we can put into a matrix to find
 NB. the 2 coefficients of the summands.
-  dr1=. (r1 d. (0{deriv)) (0{val)
-  dr2=. (r2 d. (0{deriv)) (0{val)
-  dr3=. (r1 d. (1{deriv)) (1{val)
-  dr4=. (r2 d. (1{deriv)) (1{val)
+'dr1 dr3'=. 0 1{ (r1 d. (0 1{deriv)) (0{val)
+'dr2 dr4'=. 0 1{ (r2 d. (0 1{deriv)) (0{val)
+
 NB. matrixify, get the coefficient constants
   mat=. (2 2) $ dr1, dr2, dr3, dr4
   mat=. x: %. mat
