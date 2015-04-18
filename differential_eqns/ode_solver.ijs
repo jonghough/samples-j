@@ -53,10 +53,10 @@ NB. solutions - for quadratics, differentiate the
 NB. summands and input the values.
 NB. This gets four numbers, we can put into a matrix to find
 NB. the 2 coefficients of the summands.
-dr1=. (r1 d. (0{deriv)) (0{val)
-dr2=. (r2 d. (0{deriv)) (0{val)
-dr3=. (r1 d. (1{deriv)) (1{val)
-dr4=. (r2 d. (1{deriv)) (1{val)
+'dr1 dr2'=. ((r1,r2) d. (0{deriv)) (0{val)
+NB.dr2=. (r2 d. (0{deriv)) (0{val)
+'dr3 dr4'=. ((r1,r2) d. (1{deriv)) (1{val)
+NB.dr4=. (r2 d. (1{deriv)) (1{val)
 NB. matrixify, get the coefficient constants
   mat=. (2 2) $ dr1, dr2, dr3, dr4
   mat=. x: %. mat
