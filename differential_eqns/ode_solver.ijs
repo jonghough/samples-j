@@ -1,5 +1,5 @@
 NB.  Verbs for finding analytic solutions of some ordinary differential
-NB. equations, of orders 1 and 2. 
+NB. equations, of orders 1 and 2.
 
 NB. Get roots of polynomial
 roots=: >@:(1&{)@p.
@@ -13,43 +13,43 @@ NB. Caluclates individual summand solutions
 NB. for the given polynomial and derivative and puts them
 NB. into a gerund array.
 solve_n2=: dyad define
-diff =. x
-cf =. y
-rt =. roots cf
-num =. i. # rt
-sols =. ''
+diff=. x
+cf=. y
+rt=. roots cf
+num=. i. # rt
+sols=. ''
 for_j. num do.
-sols=. sols`(((j{rt)get_exponential) d. diff)
+  sols=. sols`(((j{rt)get_exponential) d. diff)
 end.
 sols
 )
 
 NB. gets the correct row from
 NB. matrix
-getRow =: dyad define
-index =. x
-mat=.y
+getRow=: dyad define
+index=. x
+mat=. y
 index{index{mat
 )
 
-solveNow =: conjunction define
+solveNow=: conjunction define
 coeffs=. y NB. polynomial coefficients
 deriv=. >0{ x NB. the orders of derivatives
 val=. >1{ x NB. values to put in
 res=. >2{ x NB. the values' results, i.e. y^(deriv)(val) = res
 
-summands =. deriv solve_n2"(0 _) coeffs
-sm =.(summands)(`:0)"1 0 val
+summands=. deriv solve_n2"(0 _) coeffs
+sm=. (summands)(`:0)"1 0 val
 num=. # sm
 lst=. i. num
-sm =. lst getRow"(0 _) sm
+sm=. lst getRow"(0 _) sm
 mat=. x: %. sm
 constants=. mat (+/ . *) res
 len=. # constants
 
-sma=.''
+sma=. ''
 for_j. i.len do.
-sma=. sma`+`((j{constants)&*@:(coeffs solve_n j))
+  sma=. sma`+`((j{constants)&*@:(coeffs solve_n j))
 end.
 ((>:i.<:#sma){sma)`:6 NB. we want to remove the leading '+' from the output verb.
 )
@@ -101,8 +101,8 @@ NB. solutions - for quadratics, differentiate the
 NB. summands and input the values.
 NB. This gets four numbers, we can put into a matrix to find
 NB. the 2 coefficients of the summands.
-'dr1 dr2'=. ((r1,r2) d. (0{deriv)) (0{val)
-'dr3 dr4'=. ((r1,r2) d. (1{deriv)) (1{val)
+  'dr1 dr2'=. ((r1,r2) d. (0{deriv)) (0{val)
+  'dr3 dr4'=. ((r1,r2) d. (1{deriv)) (1{val)
 NB. matrixify, get the coefficient constants
   mat=. (2 2) $ dr1, dr2, dr3, dr4
   mat=. x: %. mat
