@@ -9,6 +9,57 @@ solve=: 1 : ' (roots m) get_exponential'
 solve_n=: 2 : '(n{ (roots m)) get_exponential'
 
 
+solve_n2=: dyad define
+diff =. x
+cf =. y
+rt =. roots cf
+num =. i. # rt
+sols =. ''
+for_j. num do.
+sols=. sols`(((j{rt)get_exponential) d. diff)
+end.
+sols
+)
+
+stringify =: '(',')',~5!:5
+
+
+solveNow =: conjunction define
+coeffs=. y NB. polynomial coefficients
+deriv=. >0{ x NB. the orders of derivatives
+val=. >1{ x NB. values to put in
+res=. >2{ x NB. the values' results, i.e. y^(deriv)(val) = res
+
+summands =. deriv solve_n2"(0 _) coeffs
+NB. summands =. 0{"1 summands
+smoutput '>>> <<<'
+sm =.(summands)(`:0)"1 0 val
+sm =. 0{ sm
+smoutput sm
+mat=. x: %. sm
+  constants=. mat (+/ . *) res
+smoutput '====================='
+smoutput constants
+len=. # constants
+
+sma=.''
+for_j. i.len do.
+sma=. sma`+`((j{constants)&*@:(coeffs solve_n j))
+smoutput sma
+end.
+((>:i.<:#sma){sma)`:6
+)
+
+
+
+append=: 2 : 0
+cnst =. m
+grd =. n
+
+m&*@:(grd`:6)
+)
+
+
 NB. Gets the solution
 get_exponential=: 1 : 0
 sols=: m
@@ -54,9 +105,7 @@ NB. summands and input the values.
 NB. This gets four numbers, we can put into a matrix to find
 NB. the 2 coefficients of the summands.
 'dr1 dr2'=. ((r1,r2) d. (0{deriv)) (0{val)
-NB.dr2=. (r2 d. (0{deriv)) (0{val)
 'dr3 dr4'=. ((r1,r2) d. (1{deriv)) (1{val)
-NB.dr4=. (r2 d. (1{deriv)) (1{val)
 NB. matrixify, get the coefficient constants
   mat=. (2 2) $ dr1, dr2, dr3, dr4
   mat=. x: %. mat
