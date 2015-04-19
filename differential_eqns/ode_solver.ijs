@@ -24,7 +24,13 @@ end.
 sols
 )
 
-
+NB. gets the correct row from
+NB. matrix
+getRow =: dyad define
+index =. x
+mat=.y
+index{index{mat
+)
 
 solveNow =: conjunction define
 coeffs=. y NB. polynomial coefficients
@@ -34,10 +40,11 @@ res=. >2{ x NB. the values' results, i.e. y^(deriv)(val) = res
 
 summands =. deriv solve_n2"(0 _) coeffs
 sm =.(summands)(`:0)"1 0 val
-sm =. 0{ sm
-
+num=. # sm
+lst=. i. num
+sm =. lst getRow"(0 _) sm
 mat=. x: %. sm
-  constants=. mat (+/ . *) res
+constants=. mat (+/ . *) res
 len=. # constants
 
 sma=.''
