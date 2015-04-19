@@ -9,6 +9,9 @@ solve=: 1 : ' (roots m) get_exponential'
 solve_n=: 2 : '(n{ (roots m)) get_exponential'
 
 
+NB. Caluclates individual summand solutions
+NB. for the given polynomial and derivative and puts them
+NB. into a gerund array.
 solve_n2=: dyad define
 diff =. x
 cf =. y
@@ -21,7 +24,6 @@ end.
 sols
 )
 
-stringify =: '(',')',~5!:5
 
 
 solveNow =: conjunction define
@@ -31,33 +33,21 @@ val=. >1{ x NB. values to put in
 res=. >2{ x NB. the values' results, i.e. y^(deriv)(val) = res
 
 summands =. deriv solve_n2"(0 _) coeffs
-NB. summands =. 0{"1 summands
-smoutput '>>> <<<'
 sm =.(summands)(`:0)"1 0 val
 sm =. 0{ sm
-smoutput sm
+
 mat=. x: %. sm
   constants=. mat (+/ . *) res
-smoutput '====================='
-smoutput constants
 len=. # constants
 
 sma=.''
 for_j. i.len do.
 sma=. sma`+`((j{constants)&*@:(coeffs solve_n j))
-smoutput sma
 end.
-((>:i.<:#sma){sma)`:6
+((>:i.<:#sma){sma)`:6 NB. we want to remove the leading '+' from the output verb.
 )
 
 
-
-append=: 2 : 0
-cnst =. m
-grd =. n
-
-m&*@:(grd`:6)
-)
 
 
 NB. Gets the solution
