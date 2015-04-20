@@ -14,13 +14,26 @@ db=: ''conew'jddsqlite'
 
 'create table if not exists passwords (id numeric, pword text)' ddsql__db ch
 
-
-NB. add new password
-insert =: dyad define
+NB.====================== Some CRUD =======================
+NB. INSERT OR UPDATE, PERFORM SQL COMMAND.
+NB. Should return 0.
+execSQL =: dyad define
 database =. x
-query =. y
-query ddsql__db database
+command =. y
+command ddsql__db database
 )
 
+NB. Perform query, returns boxed list.
+querySQL =: dyad define
+database =. x
+query =. y
+ddfet__db _1,~ query ddsel__db database
+)
+
+
+
 NB. example db insertion
-ch insert 'insert into passwords (id, pword) values (1, ''mysecret'')'
+ch execSQL 'insert into passwords (id, pword) values (1, ''mysecret'')'
+
+NB. example query
+ch querySQL 'select * from passwords;'
