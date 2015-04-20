@@ -39,11 +39,11 @@ val=. >1{ x NB. values to put in
 res=. >2{ x NB. the values' results, i.e. y^(deriv)(val) = res
 
 summands=. deriv solveN2"(0 _) coeffs
-sm=. (summands)(`:0)"1 0 val
+sm=. (summands)(`:0)"1 0 val 
 num=. # sm
 lst=. i. num
 sm=. lst getRow"(0 _) sm
-mat=.  %. sm
+mat=. (j./@:(x:"0)@:+.)"0(%.sm)
 constants=. mat (+/ . *) res
 len=. # constants
 
