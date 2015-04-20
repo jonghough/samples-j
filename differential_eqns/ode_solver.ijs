@@ -43,7 +43,7 @@ sm=. (summands)(`:0)"1 0 val
 num=. # sm
 lst=. i. num
 sm=. lst getRow"(0 _) sm
-mat=. x: %. sm
+mat=. (j./@:(x:"0)@:+.)"0(%.sm)
 constants=. mat (+/ . *) res
 len=. # constants
 
