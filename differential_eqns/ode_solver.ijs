@@ -13,13 +13,11 @@ NB. Caluclates individual summand solutions
 NB. for the given polynomial and derivative and puts them
 NB. into a gerund array.
 solveN2=: dyad define
-diff=. x
-cf=. y
-rt=. roots cf
+rt=. roots y
 num=. i. # rt
 sols=. ''
 for_j. num do.
-  sols=. sols`(((j{rt)getExponential) d. diff)
+  sols=. sols`(((j{rt)getExponential) d. x)
 end.
 sols
 )
