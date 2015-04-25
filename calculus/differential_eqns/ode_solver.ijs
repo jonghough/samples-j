@@ -14,12 +14,12 @@ NB. for the given polynomial and derivative and puts them
 NB. into a gerund array.
 solveN2=: dyad define
 rt=. dups roots y
-num=. i.  0{#"1 rt 
+num=. i. 0{#"1 rt
 sols=. ''
-for_j. num do. 
+for_j. num do.
   if. 1<( >1{j{"1<"0 rt) do.
     cnt=. 0
-  
+    
     duplicates=. j{"1 rt
     while. cnt < 1{duplicates do.
       sols=. sols`(((^&cnt)*((0{duplicates) getExponential)) d. x)
@@ -50,7 +50,7 @@ expression=. '' 			NB. the final expression.
 NB. Loop through the constants and attach them to
 NB. corresponding summand verb.
 for_j. i.len do.
- c=. j{constants
+  c=. j{constants
   expression=. expression`+`(c&*@:((j{0{ summands)`:6))
 end.
 ((>:i.<:#expression){expression)`:6 NB. we want to remove the leading '+' from the output verb.
