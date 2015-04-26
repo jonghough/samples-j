@@ -40,8 +40,11 @@ coeffs=. y 			NB. polynomial coefficients
 deriv=. >0{ x 			NB. the orders of derivatives
 val=. >1{ x 			NB. values to put in
 res=. >2{ x 			NB. the values' results, i.e. y^(deriv)(val) = res
-
-summands=. deriv solveN2"(0 _) coeffs
+NB. slight hack. Need to get the actual summands
+NB. (i.e. d. 0 derivatives), for the cases when
+NB. the d. 0 derivatives are not in the boundary conditions.
+summands0=. 0 solveN2"0 _ coeffs
+summands=. deriv solveN2"0 _ coeffs
 sm=. (summands)( 4 :'x`:6 y')"0 val	NB. evaluate each summand with corresponding argument value.
 mat=. (j./@:(x:"0)@:+.)"0(%.sm) 	NB. if real matrix, try to use extended precision.
 constants=. mat (+/ . *) res		NB. Calculate the constant coefficients of the summands.
@@ -51,25 +54,17 @@ NB. Loop through the constants and attach them to
 NB. corresponding summand verb.
 for_j. i.len do.
   c=. j{constants
-  expression=. expression`+`(c&*@:((j{0{ summands)`:6))
+  expression=. expression`+`(c&*@:((j{summands0)`:6))
 end.
 ((>:i.<:#expression){expression)`:6 NB. we want to remove the leading '+' from the output verb.
 )
 
 
 
-NB. Gets the solution
-getExponential=: 1 : 0
-sols=: m
-if. (# sols ) = 2 do.
-  if. =/ sols do.
-    ((>:)*(^@:(_1x&*)))
-  elseif. 1 do. ^@:(m&*)
-  end.
-else.
-  ^@:(m&*)
-end.
-)
+NB. Gets the solution for
+NB. a single summand, that is, single exponential.
+getExponential=: 1 : '^@:(m&*)'
+
 
 NB. Solution for duplicate roots.
 solveDuplicate=: 2 : 0
