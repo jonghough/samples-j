@@ -7,7 +7,12 @@ roots=: >@:(1&{)@p.
 
 solve=: 1 : ' (roots m) getExponential'
 solveN=: 2 : '(n{ (roots m)) getExponential'
+NB. Get duplicate count of a list of numbers.
 dups=: (~. ,: #/.~)@/:~
+
+NB. Gets the solution for
+NB. a single summand, that is, single exponential.
+getExponential=: 1 : '^@:(m&*)'
 
 NB. Caluclates individual summand solutions
 NB. for the given polynomial and derivative and puts them
@@ -33,8 +38,6 @@ sols
 )
 
 NB. Solve linear ODE of any order.
-NB. Only accepts unique roots solutions to auxilliary equation
-NB. polynomial. TODO - handle duplicate roots.
 solveNow=: conjunction define
 coeffs=. y 			NB. polynomial coefficients
 deriv=. >0{ x 			NB. the orders of derivatives
@@ -57,17 +60,4 @@ for_j. i.len do.
   expression=. expression`+`(c&*@:((j{summands0)`:6))
 end.
 ((>:i.<:#expression){expression)`:6 NB. we want to remove the leading '+' from the output verb.
-)
-
-
-
-NB. Gets the solution for
-NB. a single summand, that is, single exponential.
-getExponential=: 1 : '^@:(m&*)'
-
-
-NB. Solution for duplicate roots.
-solveDuplicate=: 2 : 0
-rt0=. 0{ (roots n)
-((0{m)&*@:(^@:(rt0&*)))+ ((1{m)&*@:(]*(^@:(rt0&*))))
 )
