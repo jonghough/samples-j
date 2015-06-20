@@ -5,18 +5,16 @@ coclass 'procui'
 
 
 
-Text =: spawn_jtask_ 'cat /proc/net/sockstat'
+apmText =: 'DATA' NB.spawn_jtask_ 'cat /proc/apm'
+busText =: 'DATA' NB.spawn_jtask_ 'cat /proc/bus'
+cpuinfoText =: (2!:0) 'cat /proc/cpuinfo'
+devicesText =: (2!:0) 'cat /proc/devices'
 
-
+Text =: '<pre>', apmText , CRLF , busText, CRLF, cpuinfoText, CRLF, devicesText,'</pre>'
 PROCUI=: 0 : 0
-pc procui closeok escclose;pn "Edith Demo";
-menupop "&File";
-menu open "&Open" "Ctrl+O" "" "";
-menu edit "&Edit" "Ctrl+E" "" "";
-menu print "&Print" "Ctrl+P" "" "";
-menusep;
-menu quit "&Quit" "Ctrl+Q" "" "";
-menupopz;
+pc procui closeok escclose;pn "Linux System Info";
+
+cc datatab tab;
 cc ted edith flush;
 )
 
@@ -25,7 +23,7 @@ procui_run=: 3 : 0
 wd PROCUI
 if. UNAME -: 'Linux' do. fnt=: 'font: 12pt "DejaVu Serif"' else. fnt=: 'font: 12pt "Georgia";' end.
 if. UNAME -: 'Linux' do. fnte=: 'font: 12pt "DejaVu Mono"' else. fnte=: 'font: 12pt "Courier New";' end.
-wd 'set ted stylesheet *QTextEdit {color:#00007f;background-color:#ffffee;',fnt,'}'
+wd 'set ted stylesheet *QTextEdit {color:#00007f;background-color:#ffeeeeee;',fnt,'}'
 wd 'set ted text *',Text
 wd 'pmove 100 10 700 500'
 wd 'pshow'
