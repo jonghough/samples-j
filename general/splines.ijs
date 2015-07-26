@@ -1,4 +1,7 @@
 NB. Spline matrices in J
+
+NB. Cubic Bezier curves
+matBezC =: 4 4 $ 1 0 0 0 _3 3 0 0 3 _6 3 0 _1 3 _3 1
 NB. B-spline matrix
 matBSpline =: 6%~ 4 4 $ _1 3 _3 1 3 _6 3 0 _3 0 3 0 1 4 1 0
 NB. Catmull-Rom spline matrix
