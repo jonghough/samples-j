@@ -30,6 +30,10 @@ tanh=: 7&o.@:(1&*)
 NB. derivative of activation
 dtanh=: (tanh f.) d. 1
 
+NB. sigmoid
+sigmoid =: %@:>:@:^@:-
+dsigmoid =: (sigmoid f.) d. 1
+
 NB. Learning rate.
 LEARNING_RATE=: 0.24
 NB. number of iterations for learning
@@ -55,7 +59,7 @@ WEIGHTS=: (<"1 DIMEN) $&.> W
 )
 
 NB. the training algorithm.
-fit2=: 4 : 0
+fit=: 4 : 0
 
 INPUTDATA=: y
 RESULT=: x
@@ -74,12 +78,12 @@ while. C < ITERATIONS do.
     
     NET=: (|:>j{WEIGHTS) dot THETA, 1
     ALL_NET=: ALL_NET, < NET
-    THETA=: (tanh NET)
+    THETA=: (sigmoid NET)
     
   end.
   
   ERROR=: EXPECTED - THETA
-  DELTA=: ERROR * dtanh NET
+  DELTA=: ERROR * dsigmoid NET
   I_DELTA=: DELTA
   
   for_j. |. i. # WEIGHTS do.
@@ -88,7 +92,7 @@ while. C < ITERATIONS do.
       
       CURRENT_WEIGHT=: (>j{WEIGHTS)
       CURRENT_NET=: >(j){ ALL_NET
-      wm=: (1,~ tanh CURRENT_NET) *"0 1 DELTA
+      wm=: (1,~ sigmoid CURRENT_NET) *"0 1 DELTA
       w=: CURRENT_WEIGHT + LEARNING_RATE * wm
       WEIGHTS=: (<w) j} WEIGHTS
 
@@ -97,8 +101,8 @@ while. C < ITERATIONS do.
       NEXT_WEIGHT=: >(j+1){ WEIGHTS
       CURRENT_WEIGHT=: (>j{WEIGHTS)
       CURRENT_NET=: >(j){ ALL_NET
-      m=: dtanh >(j+1){ ALL_NET
-      CURRENT_THETA=: (>@:{&ALL_NET )`(tanh@:>@:{&ALL_NET )@.(0&=) j
+      m=: dsigmoid >(j+1){ ALL_NET
+      CURRENT_THETA=: (>@:{&ALL_NET )`(sigmoid@:>@:{&ALL_NET )@.(0&=) j
       I_DELTA=: (( +/"1 I_DELTA *"1 1 (}: NEXT_WEIGHT)) * m)
       herror=: (((,&1@:$) $ ]) I_DELTA) dot ((1&,@:$) $ ]) (CURRENT_THETA,1)
       NEW_W=: CURRENT_WEIGHT + |: LEARNING_RATE * herror
@@ -112,7 +116,7 @@ THETA
 
 
 NB. Validation of NN.
-validate2=: 3 : 0
+validate=: 3 : 0
 
 INPUTDATA=: y
 INDEX=: INPUTDATA
@@ -124,7 +128,7 @@ for_j. i. # WEIGHTS do.
 
   smoutput 'for j = ',(":j),', ',":THETA, 1
   NET=: (|:>j{WEIGHTS) dot THETA, 1
-  THETA=: (tanh NET)
+  THETA=: (sigmoid NET)
 
 end.
 
@@ -132,23 +136,17 @@ THETA
 )
 
 
-NB. ignore this verb!
-NB. unused
-cleanup=: 3 : 0
-if. y = 1 do.
-  1 0 0
-elseif. y = 2 do.
-  0 1 0
+
+cleanup =: 3 : 0
+
+if. y = <'virginica' do.
+< 0 0 1
+elseif. y = <'versicolor' do.
+< 0 1 0
+elseif. y = <'setosa' do.
+< 1 0 0
+
 elseif. 1 do.
-  0 0 1
+y
 end.
 )
-
-NB. some tests, XOR and AND
-
-NB. XOR
-data1 =: 4 2 $ 0 0, 1 0, 0 1, 1 1
-res1 =: 4 1 $ 0 1 1 0
-NB. AND
-data2 =: 4 2 $ 0 0, 1 0, 0 1, 1 1
-res2 =: 4 1 $ 0 0 0 1
