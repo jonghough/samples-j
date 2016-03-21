@@ -2,10 +2,10 @@ NB. solution to the Traveling Salesman Problem using a genetic algorithm
 NB. to find the minimum cost path through all cities.
 
 MUTATION_RATE=: 0.1 NB. rate of gene mutation after mating.
-POPULATION=: 10 NB. population of chromosomes
+POPULATION=: 40 NB. population of chromosomes
 MATING_POP=: <.POPULATION % 2
 SELECTED_POP=: <.MATING_POP % 2
-CITYCOUNT=: 50 NB. number of cities.
+CITYCOUNT=: 20 NB. number of cities.
 
 list=: (#~ </"1)@(#: i.@:(*/)) 2 # CITYCOUNT
 
@@ -127,3 +127,21 @@ while. c < generations do.
 end.
 op
 )
+
+
+
+modifydistance =: 3 : 0
+'from to distance' =. y
+
+if. to = >: from do.
+distance =. 1
+elseif. distance < 10 do.
+distance =. 10
+end.
+from, to, distance
+)
+
+cities =. modifydistance"1 cities
+
+
+

@@ -139,11 +139,11 @@ THETA
 
 cleanup =: 3 : 0
 
-if. y = <'virginica' do.
+if. y = <'Iris-virginica' do.
 < 0 0 1
-elseif. y = <'versicolor' do.
+elseif. y = <'Iris-versicolor' do.
 < 0 1 0
-elseif. y = <'setosa' do.
+elseif. y = <'Iris-setosa' do.
 < 1 0 0
 
 elseif. 1 do.
